@@ -1,0 +1,36 @@
+server:
+  port: 8054
+#注册中心
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: "http://localhost:8051/eureka"
+spring:
+  application:
+    name: com-liu-orderservice
+  kafka:
+    listener:
+      poll-timeout: 6000
+    producer:
+      acks: 0
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: "com-liu"
+      auto-offset-reset: "earliest"
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    bootstrap-servers: "172.31.206.211:9092"
+logging:
+  level: info
+
+#服务降级时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
