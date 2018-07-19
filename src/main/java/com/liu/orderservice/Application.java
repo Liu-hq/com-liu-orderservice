@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringBootApplication
 @ComponentScan("com.liu.orderservice")
+@EnableCircuitBreaker
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);

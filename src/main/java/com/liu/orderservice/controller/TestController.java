@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,12 +27,14 @@ public class TestController {
     private InvokeOtherService invokeOtherService;
 
     @RequestMapping(value="/orderservice")
+    @ResponseBody
     public String goUploadImg(HttpServletRequest request) {
         Map map = new HashMap();
         map.put("user","111");
-        String re = invokeOtherService.createUser(map,request);
-        System.out.println(re);
-        return "orderservice";
+        String re = invokeOtherService.createUser(map,request);//一个
+
+        System.out.println(re+"controller");
+        return re;
     }
 
     @PostMapping(value="/send")
