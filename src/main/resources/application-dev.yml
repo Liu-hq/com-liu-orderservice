@@ -34,3 +34,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 1000
+      circuitBreaker:
+        requestVolumeThreshold: 2 #设置一个窗口内的请求数，当在该窗口内(即时间内)请求数达到了该值，则断路器会被打开 默认20
+        sleepWindowInMilliseconds: 20000 #设置在断路打开后，拒绝请求到再次尝试请求并决定断路器是否继续打开的时间 默认默认5000毫秒

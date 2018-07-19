@@ -32,8 +32,6 @@ public class TestController {
         Map map = new HashMap();
         map.put("user","111");
         String re = invokeOtherService.createUser(map,request);//一个
-
-        System.out.println(re+"controller");
         return re;
     }
 
