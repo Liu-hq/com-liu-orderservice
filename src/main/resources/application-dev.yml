@@ -1,3 +1,4 @@
+defaultCatalog: "test"
 server:
   port: 8054
 #注册中心
@@ -10,6 +11,17 @@ eureka:
 spring:
   application:
     name: com-liu-orderservice
+  redis:
+    timeout: "3000"
+    host: "172.16.105.145"
+    password: ""
+    port: "6379" #最小空闲数
+    jedis:
+      pool:
+        maxIdle: "200" #最大空闲数
+        max-active: "1024" #最大连接数
+        max-wait: "10000" #最大建立连接等待时间
+        min-idle: "20"
   kafka:
     listener:
       poll-timeout: 6000
@@ -23,6 +35,30 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     bootstrap-servers: "172.31.206.211:9092"
+  datasource:
+    druid: #druid数据源
+      url: jdbc:mysql://localhost/${defaultCatalog}?useUnicode=true&characterEncoding=UTF-8&createDatabaseIfNotExist=true
+      username: "root"
+      password: "root"
+      driver-class-name: "com.mysql.jdbc.Driver"
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 5000
+
 logging:
   level: info
 
@@ -37,3 +73,6 @@ hystrix:
       circuitBreaker:
         requestVolumeThreshold: 2 #设置一个窗口内的请求数，当在该窗口内(即时间内)请求数达到了该值，则断路器会被打开 默认20
         sleepWindowInMilliseconds: 20000 #设置在断路打开后，拒绝请求到再次尝试请求并决定断路器是否继续打开的时间 默认默认5000毫秒
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml

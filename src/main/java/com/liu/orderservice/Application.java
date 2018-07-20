@@ -1,5 +1,6 @@
 package com.liu.orderservice;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -13,8 +14,9 @@ import org.springframework.web.client.RestTemplate;
  * Created by Administrator on 2018/7/18.
  */
 @SpringBootApplication
-@ComponentScan("com.liu.orderservice")
 @EnableCircuitBreaker
+@MapperScan("com.liu.orderservice.mapper")
+@ComponentScan("com.liu.orderservice")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);

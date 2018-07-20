@@ -1,9 +1,9 @@
 package com.liu.orderservice.controller;
 
+import com.liu.orderservice.domain.UserEntity;
 import com.liu.orderservice.service.InvokeOtherService;
-import com.liu.orderservice.utils.RestTemplateUtil;
+import com.liu.orderservice.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +26,9 @@ public class TestController {
     @Autowired
     private InvokeOtherService invokeOtherService;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @RequestMapping(value="/orderservice")
     @ResponseBody
     public String goUploadImg(HttpServletRequest request) {
@@ -41,6 +44,18 @@ public class TestController {
         kafkaTemplate.send("TextLinesTopic",name);
         return "succeed";
     }
+
+    @PostMapping(value="/user")
+    public String user() {
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserName("test");
+        userEntity.setPassWord("123");
+        userEntity.setUserSex("1");
+        userMapper.insert(userEntity);
+        return "succeed";
+    }
+
 
 
 }
